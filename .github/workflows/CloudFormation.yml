@@ -31,7 +31,7 @@ jobs:
       working-directory: artifact/publish
       
     - name: Copy CloudFormation Template
-      run: cp ./z1/deployment.yaml ./artifact/deployment.yaml
+      run: cp ./deployment.yaml ./artifact/deployment.yaml
       
     - uses: actions/upload-artifact@v3
       with:
