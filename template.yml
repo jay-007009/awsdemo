@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "CloudFormation Templates "
+
+#Parameters:
+ 
+
+Resources:
+#IAM
+#CodeBuildRole
+  MyCodeBuildRole: 
+   Type: AWS::IAM::Role
+   Properties:
+     AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+            - sts: AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
+        Version: '2012-10-17'
+     Path: "/"
+     Policies:
+     - PolicyName: CFNStreamCodeBuildAccess
+       PolicyDocument: 
+          Version: '2012-10-17'
+          Statement:
+          - Action:
+            - cloudwatch:*
+            - logs:*
+            - s3:CreateBucket
+            - s3:GetObject
+            - s3:List*
+            - s3:PutObject
+            Effect: Allow
+            Resource: "*"
+
+
+
+#PipeLine
+#Source
+ MyCodeCommitRepo:
+    Type: AWS::CodeCommit::Repository
+    Properties:
+       RepositoryName: CFNStreamRepo
+       RepositoryDescription: This repo is live stream via CFN
+#Build
+ MyCodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: MyCFNStreamProject
+      ServiceRole: !Ref MyCodeBuildRole
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+         Type: LINUX_CONTAINER
+         ComputeType: BUILD_GENERAL1_SMALL
+         Image: aws/codebuild/standard:5.0 #1.0
+      Source:
+         Type: CODEPIPELINE 
+
+#Deploy
+#PipeLine
+AppPipeLine:
+   Type: AWS::CodePipeline::Pipeline
+   Properties:
+     RoleArn:
+        Ref: CodePipelineServiceRole
+     Stages:
+
+          
+
+
+
+
+
+  lambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: "Cloudformation Demo "
+      FunctionName: !Sub awslambdademo${Environment}
+      Handler: "z1::z1.Function::FunctionHandler2"
+      MemorySize: 128
+      Role: !GetAtt lambdaFunctionIamRole.Arn
+      Runtime: dotnet6
+      Timeout: 30
+      Environment:
+        Variables:
+          key1: value1 # A map of key-value pairs that the Lambda function can access
+      Code:
+        S3Bucket: demo-upload2
+        S3Key: lambda.zip
+
+      Tags:
+        - Key: keyname
+          Value: value
