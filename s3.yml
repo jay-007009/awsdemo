@@ -1,5 +1,27 @@
+# Parameters:
+#   oiuip:
+#     Type: String
+#     Description: The name of the S3 bucket
+#   Environment:
+#     Description: This stack's environment.
+#     Type: String
+#     Default: dev
+#     AllowedValues:
+#       - dev
+#       - test
+#       - prod
+
+# Resources:
+#   ExampleBucket:
+#     Type: AWS::S3::Bucket
+#     Properties:
+#       BucketName: !Ref oiuip
+#       Tags:
+#         - Key: Env
+#           Value: !Join [ '-', [ !Ref Environment, environment ] ]
+
 Parameters:
-  oiuip:
+  BucketName5897456:
     Type: String
     Description: The name of the S3 bucket
   Environment:
@@ -11,11 +33,25 @@ Parameters:
       - test
       - prod
 
+Mappings:
+  EnvironmentToKeyARN:
+    dev:
+      KMSKeyARN: kk587852469852
+    test:
+      KMSKeyARN: iouyplrmvmvmv7896
+    prod:
+      KMSKeyARN: iuy8bmgbmgbg
+
 Resources:
   ExampleBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref oiuip
+      BucketName: !Ref BucketName5897456
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: "aws:kms"
+              KMSMasterKeyID: !FindInMap [EnvironmentToKeyARN, !Ref Environment, KMSKeyARN]
       Tags:
-        - Key: Env
-          Value: !Join [ '-', [ !Ref Environment, environment ] ]
+        - Key: Name
+          Value: !Join ["-", [!Ref Environment, environment]]
