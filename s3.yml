@@ -55,3 +55,8 @@ Resources:
       Tags:
         - Key: Name
           Value: !Join ["-", [!Ref Environment, environment]]
+
+Outputs:
+  BucketARN:
+    Description: 'The ARN of the bucket'
+    Value: !GetAtt ExampleBucket.Arn
