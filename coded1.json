@@ -1,12 +1,23 @@
+// {
+//   "Version": "2012-10-17",
+//   "Statement": [
+//     {
+//       "Effect": "Allow",
+//       "Principal": {
+//         "Service": ["cloudformation.amazonaws.com", "codepipeline.amazonaws.com", "codebuild.amazonaws.com"]
+//       },
+//       "Action": "sts:AssumeRole"
+//     }
+//   ]
+// }
+
 {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Action": "*",
       "Effect": "Allow",
-      "Principal": {
-        "Service": ["cloudformation.amazonaws.com", "codepipeline.amazonaws.com", "codebuild.amazonaws.com"]
-      },
-      "Action": "sts:AssumeRole"
+      "Resource": "*"
     }
   ]
 }
