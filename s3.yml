@@ -21,7 +21,7 @@
 #           Value: !Join [ '-', [ !Ref Environment, environment ] ]
 
 Parameters:
-  BucketName5897456:
+  naman789658:
     Type: String
     Description: The name of the S3 bucket
   Environment:
@@ -46,7 +46,7 @@ Resources:
   ExampleBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref BucketName5897456
+      BucketName: !Ref naman789658
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
