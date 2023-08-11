@@ -21,3 +21,8 @@ if (operation === 'divide') {
     console.log(operation + ' is '
         + (operator1 - operator2));
 }
+
+if (operation === 'd') {
+    console.log(operation + ' is '
+        + (operator1 + operator2));
+}
