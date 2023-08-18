@@ -26,6 +26,8 @@ phases:
   post_build:
     commands:
       - echo "Terraform plan completed on `date`"
+      - echo ${PERMISSION_SETS_DIR}
+      
 
 artifacts:
   files:
