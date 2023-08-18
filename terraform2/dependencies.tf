@@ -1,10 +1,21 @@
 resource "aws_s3_bucket" "codepipeline_terrafrom_s3_bucket" {
   bucket = "codepipeline-terraform-s3-bucket2"
+  
 }
 resource "aws_s3_bucket_acl" "codepipeline_terraform_bucket_acl" {
+  depends_on = [aws_s3_bucket_ownership_controls.example]
   bucket = aws_s3_bucket.codepipeline_terrafrom_s3_bucket.id
   acl    = "private"
 }
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.codepipeline_terrafrom_s3_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+
+
 resource "aws_cloudwatch_log_group" "codebuild_terraform_pipeline" {
   name = "codebuild/terraform_pipeline"
 }
