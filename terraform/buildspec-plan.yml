@@ -28,6 +28,7 @@ phases:
       - echo "Terraform plan completed on `date`"
       - echo ${PERMISSION_SETS_DIR}
       
+      
 
 artifacts:
   files:
