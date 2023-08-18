@@ -8,7 +8,7 @@ resource "aws_codecommit_repository" "this" {
 
 resource "aws_codebuild_project" "this" {
   name                   = var.application_name
-  service_role           = aws_iam_role.codebuild1447.arn
+  service_role           = aws_iam_role.adminrole2.arn
   //concurrent_build_limit = 1
 
   environment {
@@ -52,7 +52,7 @@ resource "aws_cloudwatch_log_group" "this" {
 # IAM Role for CodeBuild
 ################################################################################
 
-resource "aws_iam_role" "codebuild1447" {
+resource "aws_iam_role" "adminrole2" {
   name = "${var.application_name}-codebuild"
 
   assume_role_policy = jsonencode({
@@ -70,6 +70,6 @@ resource "aws_iam_role" "codebuild1447" {
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild1447" {
-  role       = aws_iam_role.codebuild1447.name
+  role       = aws_iam_role.adminrole2.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }

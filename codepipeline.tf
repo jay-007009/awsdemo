@@ -5,7 +5,7 @@
 resource "aws_codepipeline" "this" {
 
   name     = var.application_name
-  role_arn = aws_iam_role.codepipeline1447.arn
+  role_arn = aws_iam_role.apps_codepipeline_role.arn
 
   artifact_store {
 
@@ -168,7 +168,7 @@ resource "aws_codepipeline" "this" {
 # IAM Role for CodePipeline
 ################################################################################
 
-resource "aws_iam_role" "codepipeline1447" {
+resource "aws_iam_role" "apps_codepipeline_role" {
   name = "${var.application_name}-codepipeline"
 
   assume_role_policy = jsonencode({
@@ -252,6 +252,6 @@ resource "aws_iam_policy" "codepipeline1447" {
 }
 
 resource "aws_iam_role_policy_attachment" "codepipeline1447" {
-  role       = aws_iam_role.codepipeline1447.name
+  role       = aws_iam_role.apps_codepipeline_role.name
   policy_arn = aws_iam_policy.codepipeline1447.arn
 }
