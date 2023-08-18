@@ -1,0 +1,24 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - cd /tmp
+      - echo Terraform version $TF_VERSION
+      - "curl -o terraform_${TF_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
+      - unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+    finally:
+      - terraform --version
+      - cd $CODEBUILD_SRC_DIR
+pre_build:
+  commands:
+    - terraform init
+    - terraform validate
+build:
+  commands:
+    - "terraform $TF_COMMAND -auto-approve"
+post_build:
+  commands:
+    - "echo terraform $TF_COMMAND completed on `date`"
+cache:
+  paths:
+    - /tmp
