@@ -185,7 +185,7 @@ resource "aws_iam_role" "codepipeline1447" {
   })
 }
 
-data "aws_iam_policy_document" "codepipeline" {
+data "aws_iam_policy_document" "codepipeline1447" {
   statement {
     sid = "s3access"
     actions = [
@@ -246,12 +246,12 @@ data "aws_iam_policy_document" "codepipeline" {
 }
 
 
-resource "aws_iam_policy" "codepipeline" {
+resource "aws_iam_policy" "codepipeline1447" {
   name   = "codepipeline"
-  policy = data.aws_iam_policy_document.codepipeline.json
+  policy = data.aws_iam_policy_document.codepipeline1447.json
 }
 
-resource "aws_iam_role_policy_attachment" "codepipeline" {
+resource "aws_iam_role_policy_attachment" "codepipeline1447" {
   role       = aws_iam_role.codepipeline1447.name
-  policy_arn = aws_iam_policy.codepipeline.arn
+  policy_arn = aws_iam_policy.codepipeline1447.arn
 }
