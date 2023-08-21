@@ -5,7 +5,7 @@
 resource "aws_codepipeline" "this" {
 
   name     = var.application_name
-  role_arn = aws_iam_role.apps_codepipeline_role.arn
+  role_arn = aws_iam_role.chirag45689.arn
 
   artifact_store {
 
@@ -168,7 +168,7 @@ resource "aws_codepipeline" "this" {
 # IAM Role for CodePipeline
 ################################################################################
 
-resource "aws_iam_role" "apps_codepipeline_role" {
+resource "aws_iam_role" "chirag45689" {
   name = "${var.application_name}-codepipeline"
 
   assume_role_policy = jsonencode({
@@ -185,7 +185,7 @@ resource "aws_iam_role" "apps_codepipeline_role" {
   })
 }
 
-data "aws_iam_policy_document" "codepipeline1447" {
+data "aws_iam_policy_document" "chirag456898" {
   statement {
     sid = "s3access"
     actions = [
@@ -246,12 +246,12 @@ data "aws_iam_policy_document" "codepipeline1447" {
 }
 
 
-resource "aws_iam_policy" "codepipeline1447" {
+resource "aws_iam_policy" "chirag4568989" {
   name   = "codepipeline"
-  policy = data.aws_iam_policy_document.codepipeline1447.json
+  policy = data.aws_iam_policy_document.chirag456898.json
 }
 
-resource "aws_iam_role_policy_attachment" "codepipeline1447" {
-  role       = aws_iam_role.apps_codepipeline_role.name
-  policy_arn = aws_iam_policy.codepipeline1447.arn
+resource "aws_iam_role_policy_attachment" "chirag456898456" {
+  role       = aws_iam_role.chirag45689.name
+  policy_arn = aws_iam_policy.chirag4568989.arn
 }
